@@ -1,10 +1,20 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-
+const app = require('express')();
 admin.initializeApp();
 
-const express = require('express');
-const app = express();
+const config = {
+  apiKey: "AIzaSyCY4OvHZFZvQckFtqcePZ2lZfY2ODcAnLQ",
+  authDomain: "socialape-ba99e.firebaseapp.com",
+  databaseURL: "https://socialape-ba99e.firebaseio.com",
+  projectId: "socialape-ba99e",
+  storageBucket: "socialape-ba99e.appspot.com",
+  messagingSenderId: "761967863891",
+  appId: "1:761967863891:web:eb1770742855162ec3fea6"
+};
+
+const firebase = require('firebase');
+firebase.initializeApp(config);
 
 // Gets all Screams
 app.get('/screams', (req, res) => {
@@ -52,6 +62,25 @@ app.post('/scream', (req, res) => {
       console.error(err);
     })
 })
+
+// Signup route
+app.post('/signup', (req,res) => {
+  const newUser = {
+    email:req.body.email,
+    password:req.body.password,
+    confirmPassword:req.body.email,
+    userHandle:req.body.userHandle
+  }
+
+  firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password)
+    .then(data => {
+      return res.status(201).json({message: `user ${data.user.uid} signed up successfully` });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({error: err.code});
+    });
+});
 
 // https://baseurl.com/api
 exports.api = functions.region('europe-west1').https.onRequest(app);
