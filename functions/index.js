@@ -88,10 +88,14 @@ app.post('/signup', (req, res) => {
   let errors={};
 
   if(isEmpty(newUser.email)){
-    errors.email = 'Please fill in an Email address'
+    errors.email = 'Please fill it in'
   } else if (!isEmail(newUser.email)){
     errors.email = 'Please fill a valid Email address'
   }
+
+  if(isEmpty(newUser.password)) errors.password = 'Please fill it in'
+  if(newUser.password !== newUser.confirmPassword) errors.confirmPassword = 'Passwords must be the same'
+  if(isEmpty(newUser.userHandle)) errors.userHandle = 'Please fill it in'
 
   let token, userId;
   db.doc(`/users/${newUser.userHandle}`)
