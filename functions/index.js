@@ -64,6 +64,12 @@ app.post('/scream', (req, res) => {
     })
 })
 
+// Function Checking if string is empty or not
+const isEmpty = (string) => {
+  if(string.trim() === '') return true;
+  else return false;
+}
+
 // Signup route
 app.post('/signup', (req, res) => {
   const newUser = {
