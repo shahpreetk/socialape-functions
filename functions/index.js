@@ -97,6 +97,8 @@ app.post('/signup', (req, res) => {
   if(newUser.password !== newUser.confirmPassword) errors.confirmPassword = 'Passwords must be the same'
   if(isEmpty(newUser.userHandle)) errors.userHandle = 'Please fill it in'
 
+  if(Object.keys(errors).length > 0) return res.status(400).json(errors);
+
   let token, userId;
   db.doc(`/users/${newUser.userHandle}`)
     .get()
