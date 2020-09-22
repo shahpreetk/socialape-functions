@@ -92,6 +92,15 @@ exports.login = (req, res) => {
 // Add user details
 exports.addUserDetails = (req, res) => {
   let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.userHandle}`).update(userDetails)
+    .then(() => {
+      return res.json({message: 'Details added successfully'});
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({error: err.code});
+    })
 }
 
 // Upload a profile pic for user
