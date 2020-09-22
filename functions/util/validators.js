@@ -32,8 +32,8 @@ const isEmail = (email) => {
   exports.validateLoginData = (data) => {
     let errors = {};
 
-    if(isEmpty(user.email)) errors.email = 'Please fill it in';
-    if(isEmpty(user.password)) errors.password = 'Please fill it in';
+    if(isEmpty(data.email)) errors.email = 'Please fill it in';
+    if(isEmpty(data.password)) errors.password = 'Please fill it in';
 
     return {
         errors,
