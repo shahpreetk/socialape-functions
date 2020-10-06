@@ -10,7 +10,7 @@ app.post('/scream', FBAuth, postOneScream); //creates a scream
 app.get('/scream/:screamId', getScream); //gets a particular scream
 app.post('/scream/:screamId/comment', FBAuth, commentOnScream); //posts comment on a scream
 app.get('/scream/:screamId/like', FBAuth, likeScream); //like scream
-// app.get('/scream/:screamId/unlike', FBAuth, unlikeScream); //unlike scream
+app.get('/scream/:screamId/unlike', FBAuth, unlikeScream); //unlike scream
 
 // Authentication/Users routes
 app.post('/signup', signup); //signup
