@@ -21,7 +21,17 @@ let db = {
     screamId: 'kdjsfgdksuufhgkdsufky',
     body: 'nice one mate!',
     createdAt: '2019-03-15T10:59:52.798Z'
-  }]
+  }],
+  notifications: [
+    {
+      recipient: 'user',
+      sender: 'john',
+      read: 'true | false',
+      screamId: 'kdjsfgdksuufhgkdsufky',
+      type: 'like | comment',
+      createdAt: '2019-03-15T10:59:52.798Z'
+    }
+  ]
 };
 const userDetails = {
   // Redux data
