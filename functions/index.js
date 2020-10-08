@@ -99,7 +99,7 @@ exports.onUserImageChange = functions.region('europe-west1').firestore.document(
     console.log(change.after.data())
     if(change.before.data().imageUrl !== change.after.data().imageUrl){
         console.log('image has changed')
-        let batch = db.batch()
+        const batch = db.batch()
         return db.collection('screams').where('userHandle', '==', change.before.data().userHandle).get()
         .then((data)=>{
             data.forEach(doc => {
@@ -108,6 +108,30 @@ exports.onUserImageChange = functions.region('europe-west1').firestore.document(
             })
             return batch.commit()
         })
-    }
+    } else return true;
 })
 
+exports.onScreamDelete = functions.region('europe-west1').firestore.document('/screams/{screamId}').onDelete((snapshot,context) => {
+    const screamId = context.params.screamId;
+    const batch = db.batch();
+    return db.collection('comments').where('screamId', '==', screamId).get()
+        .then(data => {
+            data.forEach(doc => {
+                batch.delete(db.doc(`/comments/${doc.id}`))
+            })
+            return db.collection('likes').where('screamId', '==', screamId).get()
+        })
+        .then(data => {
+            data.forEach(doc => {
+                batch.delete(db.doc(`/likes/${doc.id}`))
+            })
+            return db.collection('notifications').where('screamId', '==', screamId).get()
+        })
+        .then(data => {
+            data.forEach(doc => {
+                batch.delete(db.doc(`/notifications/${doc.id}`))
+            })
+            return batch.commit()
+        })
+        .catch(err => console.error(err))
+})
