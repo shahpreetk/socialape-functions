@@ -4,6 +4,8 @@ const FBAuth = require('./util/FBAuth');
 const {
     db
 } = require('./util/admin')
+const cors = require('cors')
+app.use(cors())
 const {
     getAllScreams,
     postOneScream,
