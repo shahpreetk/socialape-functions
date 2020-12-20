@@ -56,7 +56,8 @@ exports.createNotificationOnLike = functions.region('europe-west1').firestore.do
                     sender: snapshot.data().userHandle,
                     type: 'like',
                     read: false,
-                    screamId: doc.id
+                    screamId: doc.id,
+                    notificationId: snapshot.id
                 })
             }
         })
@@ -83,7 +84,8 @@ exports.createNotificationOnComment = functions.region('europe-west1').firestore
                     sender: snapshot.data().userHandle,
                     type: 'comment',
                     read: false,
-                    screamId: doc.id
+                    screamId: doc.id,
+                    notificationId: snapshot.id
                 })
             }
         })
